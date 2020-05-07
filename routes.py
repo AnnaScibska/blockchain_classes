@@ -1,0 +1,7 @@
+@app.route('/new_transaction', methods=['POST'])
+@app.route('/chain', methods=['GET'])
+@app.route('/mine', methods=['GET'])
+@app.route('/pending_tx')
+@app.route('/add_peers', methods=['POST'])
+@app.route('/consensus', methods=['GET'])
+@app.route('/add_block', methods=['POST'])

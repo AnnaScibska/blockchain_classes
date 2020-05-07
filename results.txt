@@ -1,0 +1,105 @@
+http://0.0.0.0:8002/add_peers -> on all nodes:
+
+    payload: {
+        "nodes": ["http://localhost:8000",
+                "http://localhost:8001",
+                "http://localhost:8002" ]
+    }
+
+http://0.0.0.0:8000/new_transaction -> always:
+
+    payload: {
+        "author": "some_author_name",
+        "content": "Some thoughts that author wants to share",
+        "timestamp": "The time at which the content was created"
+    }
+
+    Success
+
+http://0.0.0.0:8000/mine -> when no new_transaction
+
+    No transactions to mine
+
+http://0.0.0.0:8000/mine -> when new_transaction
+
+    Block #3 is mined.
+
+http://0.0.0.0:8000/chain -> when empty (no transaction mined)
+
+    {
+        "length": 1, 
+        "chain": [
+            {
+                "nonce": 0, 
+                "index": 0, 
+                "hash":
+                    "6de4567b275d6ae903d9d54bc08023c94f9793fb6a171d452048bd7e57cb4df8", 
+                    "transactions": [], 
+                    "timestamp": 1588848270.401,
+                    "previous_hash": "0"
+            }
+        ]
+    }
+
+http://0.0.0.0:8000/chain -> when transactions mined
+
+    {   
+        "length": 3, 
+        "chain": [
+            {
+                "nonce": 0, 
+                "index": 0, 
+                "hash": "9fa8303e66283a9e6cb9ccccef50fafa3f40508f71c48947bbf595c88297aae5", 
+                "transactions": [], 
+                "timestamp": 1588852954.083,
+                "previous_hash": "0"
+            }, 
+            {
+                "nonce": 541, 
+                "index": 1, 
+                "hash": "00412e2a3973a88d9b92dd13eb89f69b96167d71de1965552f03286812b99bd9", 
+                "transactions": [
+                    {
+                        "content": "Some thoughts that author wants to share", 
+                        "timestamp": 1588853130.475, 
+                        "author": "some_author_name"
+                    }], 
+                "timestamp": 1588853134.089,
+                "previous_hash": "babdc516d05db8b8f47d52fc10a6d0b34a6621933944dba758d76a699fdf204d"
+            }, 
+            {
+                "nonce": 641, 
+                "index": 2, 
+                "hash": "00ebb32b6335fac56ff47b5e82c07285a6647a33f168c36a6979d31da6a6ef3a", 
+                "transactions": [
+                    {
+                        "content": "Some thoughts that author wants to share", 
+                        "timestamp": 1588853151.299, 
+                        "author": "some_author_name"
+                    }], 
+                "timestamp": 1588853154.458,
+                "previous_hash": "135de6aca3efc5f6f461d9600eceeb88d25cf12e7a1825ef259136a27ca9134b"
+            }
+        ]
+    }
+
+http://0.0.0.0:8000/add_block -> ?
+
+    payload: {
+        "nonce": 0, 
+        "index": 0, 
+        "hash": "298654e8e82ad52f4a1c54c17e544289d2e76290ed8529513897862d8ed906f7", 
+        "transactions": [], 
+        "timestamp": 1588854709.988,
+        "previous_hash": "0"
+    }
+
+    response:
+
+        The block was discarded by the node
+
+http://0.0.0.0:8001/consensus
+
+    {
+        "message": "All good. The chain is the longest one."
+    }
